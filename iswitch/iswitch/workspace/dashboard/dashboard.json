@@ -1,0 +1,63 @@
+{
+ "app": "iSwitch",
+ "charts": [
+  {
+   "chart_name": "Order Count",
+   "label": "Order Analytics"
+  },
+  {
+   "chart_name": "Transaction Analytics",
+   "label": "Transaction Analytics"
+  }
+ ],
+ "content": "[{\"id\":\"CqIR65bMgF\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"OxUpcznntB\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payout Processed\",\"col\":3}},{\"id\":\"uFZgTitEm4\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payout Processing\",\"col\":3}},{\"id\":\"F4bftQSjmC\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payout Failed\",\"col\":3}},{\"id\":\"Kwj3-9aW2X\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payout Reversed\",\"col\":3}},{\"id\":\"UtDOor8oPA\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"6Wm6FHMxID\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Order Analytics\",\"col\":6}},{\"id\":\"muBFoVlCxX\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Transaction Analytics\",\"col\":6}},{\"id\":\"krvmCPT5jm\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"-_asupyj6-\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Dashboard Footer\",\"col\":12}}]",
+ "creation": "2025-07-20 14:37:32.595804",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Dashboard Footer",
+   "label": "Dashboard Footer"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "dashboard",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Dashboard",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-09-06 00:33:27.210171",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Dashboard",
+ "number_cards": [
+  {
+   "label": "Payout Failed",
+   "number_card_name": "Payout Failed"
+  },
+  {
+   "label": "Payout Processed",
+   "number_card_name": "Payout Processed"
+  },
+  {
+   "label": "Payout Processing",
+   "number_card_name": "Payout Processing"
+  },
+  {
+   "label": "Payout Reversed",
+   "number_card_name": "Payout Reversed"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [],
+ "title": "Dashboard",
+ "type": "Workspace"
+}

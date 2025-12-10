@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:TXN{YY}{MM}{DD}{#####}",
+ "creation": "2025-07-24 10:31:21.661403",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "account_number",
+  "amount",
+  "status",
+  "opening_balance",
+  "ifsc",
+  "merchant",
+  "merchant_email",
+  "column_break_mzpg",
+  "transaction_type",
+  "utr",
+  "amended_from",
+  "closing_balance",
+  "remitter_name",
+  "remitter_ifsc_code",
+  "remitter_account_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Account Number"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "column_break_mzpg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_type",
+   "fieldtype": "Select",
+   "label": "Transaction Type",
+   "options": "Debit\nCredit"
+  },
+  {
+   "fieldname": "utr",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "label": "UTR"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Failed\nSuccess\nPending"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Virtual Account Logs",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "opening_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Opening Balance"
+  },
+  {
+   "fieldname": "closing_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Closing Balance"
+  },
+  {
+   "fetch_from": "account_number.ifsc",
+   "fieldname": "ifsc",
+   "fieldtype": "Data",
+   "label": "IFSC"
+  },
+  {
+   "fetch_from": "account_number.merchant_name",
+   "fieldname": "merchant",
+   "fieldtype": "Data",
+   "label": "Merchant"
+  },
+  {
+   "fetch_from": "account_number.merchant",
+   "fieldname": "merchant_email",
+   "fieldtype": "Data",
+   "label": "Merchant Email"
+  },
+  {
+   "fieldname": "remitter_name",
+   "fieldtype": "Data",
+   "label": "Remitter Name"
+  },
+  {
+   "fieldname": "remitter_ifsc_code",
+   "fieldtype": "Data",
+   "label": "Remitter IFSC Code"
+  },
+  {
+   "fieldname": "remitter_account_number",
+   "fieldtype": "Data",
+   "label": "Remitter Account Number"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-09-11 11:15:28.727372",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Virtual Account Logs",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

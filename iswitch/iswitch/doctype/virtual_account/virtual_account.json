@@ -1,0 +1,94 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:account_number",
+ "creation": "2025-07-24 10:29:42.257682",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "merchant",
+  "prefix",
+  "account_number",
+  "column_break_myvg",
+  "merchant_name",
+  "ifsc",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "merchant",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Merchant ID",
+   "options": "Merchant"
+  },
+  {
+   "fieldname": "column_break_myvg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Account Number",
+   "unique": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nFrozen"
+  },
+  {
+   "fetch_from": "prefix.ifsc",
+   "fieldname": "ifsc",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "IFSC",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "merchant.company_name",
+   "fieldname": "merchant_name",
+   "fieldtype": "Data",
+   "label": "Merchant Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "prefix",
+   "fieldtype": "Link",
+   "label": "Prefix",
+   "options": "Bank Prefix",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-31 17:28:09.431289",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Virtual Account",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

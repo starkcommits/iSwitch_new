@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Portal - iSwitch</title>
+
+    <!-- Pico CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"> -->
+
+    <!-- Custom Portal CSS -->
+    <link rel="stylesheet" href="/assets/iswitch/css/portal.css">
+    <link rel="stylesheet" href="/assets/iswitch/css/portal_mobile_fixes.css">
+
+
+    <!-- HTMX -->
+    <script src="/assets/iswitch/js/htmx.js"></script>
+
+    <!-- Portal JS -->
+    <script src="/assets/iswitch/js/portal.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="portal-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>iSwitch Portal</h2>
+                <p id="merchant-name">Merchant Dashboard</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" hx-get="/api/method/iswitch.portal_api.get_dashboard_stats"
+                    hx-target="#main-content" hx-swap="innerHTML" onclick="loadDashboard(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Dashboard
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadTransactions(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadLedger(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    Ledger
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadVANLogs(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    VAN Logs
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadAPIKeys(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                    API Keys
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadWebhooks(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Webhooks
+                </a>
+
+                <a href="#" class="nav-item" onclick="loadIPWhitelist(); setActiveNav(this); return false;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    IP Whitelist
+                </a>
+            </nav>
+
+            <!-- Profile Section -->
+            <div class="sidebar-profile" hx-get="/api/method/iswitch.portal_api.get_merchant_profile" hx-trigger="load"
+                hx-swap="innerHTML"
+                style="margin-top: auto; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="text-align: center; padding: 1rem;">
+                    <div class="loading-spinner" style="margin: 0 auto; width: 20px; height: 20px;"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <svg id="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+
+        <!-- Mobile Overlay -->
+        <div id="mobile-overlay" onclick="toggleSidebar()" aria-label="Close menu"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Persistent Header with Welcome Message and Wallet Balance -->
+            <div id="wallet-balance-container" hx-get="/api/method/iswitch.portal_api.get_wallet_balance_header"
+                hx-trigger="load, walletBalanceUpdate from:body" hx-swap="innerHTML">
+                <div style="text-align: center; padding: 2rem;">
+                    <div class="loading-spinner" style="margin: 0 auto;"></div>
+                    <p style="margin-top: 1rem; color: #6b7280;">Loading...</p>
+                </div>
+            </div>
+
+            <div id="main-content" hx-get="/api/method/iswitch.portal_api.get_dashboard_stats" hx-trigger="load"
+                hx-swap="innerHTML">
+                <!-- Dashboard content will be loaded here -->
+                <div style="text-align: center; padding: 3rem;">
+                    <div class="loading-spinner" style="margin: 0 auto;"></div>
+                    <p style="margin-top: 1rem; color: #6b7280;">Loading dashboard...</p>
+                </div>
+            </div>
+
+            <script>
+                // Helper function to set active nav item
+                window.setActiveNav = function(element) {
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    if (element) {
+                        element.classList.add('active');
+                    }
+                };
+
+                // Navigation handlers - these load different sections
+                window.loadDashboard = function() {
+                    htmx.ajax('GET', '/api/method/iswitch.portal_api.get_dashboard_stats', {
+                        target: '#main-content',
+                        swap: 'innerHTML'
+                    });
+                    // Wallet balance will be updated via htmx:afterSwap event
+                }
+
+                window.loadTransactions = function() {
+                    const html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>All Transactions</h3>
+                    </div>
+                    
+                    <div id="transactions-content" 
+                         hx-get="/api/method/iswitch.portal_api.get_merchant_orders?page=1&limit=10"
+                         hx-trigger="load"
+                         hx-swap="innerHTML">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="loading-spinner" style="margin: 0 auto;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    document.getElementById('main-content').innerHTML = html;
+                    htmx.process(document.getElementById('transactions-content'));
+                }
+
+                window.loadLedger = function() {
+                    const html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Ledger Entries</h3>
+                    </div>
+                    
+                    <div id="ledger-content"
+                         hx-get="/api/method/iswitch.portal_api.get_merchant_ledger?page=1&limit=10"
+                         hx-trigger="load"
+                         hx-swap="innerHTML">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="loading-spinner" style="margin: 0 auto;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    document.getElementById('main-content').innerHTML = html;
+                    htmx.process(document.getElementById('ledger-content'));
+                }
+
+                window.loadVANLogs = function() {
+                    const html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>VAN Logs</h3>
+                    </div>
+                    
+                    <div id="van-content"
+                         hx-get="/api/method/iswitch.portal_api.get_merchant_van_logs?page=1&limit=10"
+                         hx-trigger="load"
+                         hx-swap="innerHTML">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="loading-spinner" style="margin: 0 auto;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    document.getElementById('main-content').innerHTML = html;
+                    htmx.process(document.getElementById('van-content'));
+                }
+
+                window.loadAPIKeys = function() {
+                    const html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>API Credentials</h3>
+                    </div>
+                    
+                    <div id="api-keys-display" style="padding: 1.5rem;"
+                         hx-get="/api/method/iswitch.api.get_existing_keys"
+                         hx-trigger="load"
+                         hx-swap="innerHTML">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="loading-spinner" style="margin: 0 auto;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    document.getElementById('main-content').innerHTML = html;
+                    htmx.process(document.getElementById('api-keys-display'));
+                }
+
+                window.loadWebhooks = async function() {
+                    document.getElementById('main-content').innerHTML = `
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h3>Webhook Settings</h3>
+                            </div>
+                            <div id="webhook-config" style="text-align: center; padding: 2rem;">
+                                <div class="loading-spinner" style="margin: 0 auto;"></div>
+                            </div>
+                        </div>
+                    `;
+
+                    try {
+                        const response = await fetch('/api/method/iswitch.portal_api.get_webhook_config', {
+                            method: 'GET',
+                            credentials: 'same-origin',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        if (data.message) {
+                            document.getElementById('webhook-config').innerHTML = data.message;
+                        } else {
+                            throw new Error('No data received');
+                        }
+                    } catch (error) {
+                        console.error('Error loading webhook config:', error);
+                        document.getElementById('webhook-config').innerHTML = `
+                            <div style="padding: 2rem; text-align: center;">
+                                <p style="color: #ef4444;">Error loading webhook configuration. Please try again.</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Load IP Whitelist page
+                window.loadIPWhitelist = async function() {
+                    document.getElementById('main-content').innerHTML = `
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h3>IP Whitelist</h3>
+                            </div>
+                            <div id="ip-whitelist-content" style="text-align: center; padding: 2rem;">
+                                <div class="loading-spinner" style="margin: 0 auto;"></div>
+                                <p style="margin-top: 1rem; color: #6b7280;">Loading IP whitelist...</p>
+                            </div>
+                        </div>
+                    `;
+
+                    try {
+                        const response = await fetch('/api/method/iswitch.portal_api.get_ip_whitelist', {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        // Get the response as text first
+                        const text = await response.text();
+
+                        // Try to parse as JSON, if it fails, use as HTML directly
+                        try {
+                            const data = JSON.parse(text);
+                            if (data.message) {
+                                document.getElementById('ip-whitelist-content').innerHTML = data.message;
+                            } else {
+                                throw new Error('No data received');
+                            }
+                        } catch (jsonError) {
+                            // If JSON parsing fails, it's likely HTML from Response object
+                            document.getElementById('ip-whitelist-content').innerHTML = text;
+                        }
+                    } catch (error) {
+                        console.error('Error loading IP whitelist:', error);
+                        document.getElementById('ip-whitelist-content').innerHTML = `
+                            <div style="padding: 2rem; text-align: center;">
+                                <p style="color: #ef4444;">Error loading IP whitelist. Please try again.</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Global function for updating webhook
+                window.updateWebhookURL = async function () {
+                    console.log('Update webhook function called!');
+
+                    const webhookInput = document.getElementById('webhook-input-field');
+                    if (!webhookInput) {
+                        console.error('Webhook input not found!');
+                        return;
+                    }
+
+                    const newWebhook = webhookInput.value.trim();
+
+                    if (!newWebhook) {
+                        showWebhookMessage('Webhook URL cannot be empty.', 'error');
+                        return;
+                    }
+
+                    // Validate URL format
+                    try {
+                        new URL(newWebhook);
+                    } catch (e) {
+                        showWebhookMessage('Please enter a valid URL.', 'error');
+                        return;
+                    }
+
+                    try {
+                        console.log('Sending request to update webhook:', newWebhook);
+
+                        const response = await fetch(`/api/method/iswitch.webhook.update_webhook?webhook_url=${encodeURIComponent(newWebhook)}`, {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        const res = await response.json();
+                        console.log('API response:', res);
+
+                        if (res.message && res.message.status) {
+                            if (res.message.status === 'unchanged') {
+                                showWebhookMessage('This webhook URL is already whitelisted.', 'info');
+                            } else {
+                                showWebhookMessage(`Webhook ${res.message.status} successfully!`, 'success');
+                            }
+                        } else {
+                            throw new Error('Failed to update webhook');
+                        }
+                    } catch (err) {
+                        console.error('Error updating webhook:', err);
+                        showWebhookMessage(err.message || 'Failed to update webhook URL.', 'error');
+                    }
+                };
+
+                // Custom modal for webhook messages
+                window.showWebhookMessage = function (message, type) {
+                    const modal = document.createElement('div');
+                    const isMobile = window.innerWidth <= 768;
+                    modal.style.cssText = `position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: ${isMobile ? 'flex-end' : 'center'}; justify-content: center; z-index: 9999; backdrop-filter: blur(4px); padding: ${isMobile ? '1rem' : '0'};`;
+
+                    let bgColor, icon, title, buttonColor;
+
+                    if (type === 'success') {
+                        bgColor = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                        icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />';
+                        title = 'Success!';
+                        buttonColor = '#10b981';
+                    } else if (type === 'info') {
+                        bgColor = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+                        icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
+                        title = 'Info';
+                        buttonColor = '#3b82f6';
+                    } else {
+                        bgColor = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                        icon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />';
+                        title = 'Error';
+                        buttonColor = '#ef4444';
+                    }
+
+                    modal.innerHTML = `
+                        <div style="background: ${bgColor}; border-radius: ${isMobile ? '16px 16px 0 0' : '16px'}; padding: ${isMobile ? '1.5rem' : '2.5rem'}; max-width: 400px; width: ${isMobile ? '100%' : '90%'}; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                            <div style="position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                            
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                                    <svg fill="none" stroke="white" viewBox="0 0 24 24" width="40" height="40">
+                                        ${icon}
+                                    </svg>
+                                </div>
+                                
+                                <h3 style="margin: 0 0 1rem 0; font-size: 1.5rem; font-weight: 700; color: white;">${title}</h3>
+                                <p style="margin: 0 0 2rem 0; color: rgba(255,255,255,0.95); font-size: 1rem; line-height: 1.6;">${message}</p>
+                                
+                                <button onclick="this.closest('div[style*=fixed]').remove()" style="width: 100%; padding: 1rem; background: white; color: ${buttonColor}; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'">
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.body.appendChild(modal);
+                };
+
+                // IP Whitelist Dialog Functions
+                window.openAddIPDialog = function () {
+                    const modal = document.createElement('div');
+                    modal.id = 'add-ip-modal';
+                    const isMobile = window.innerWidth <= 768;
+                    modal.style.cssText = `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: ${isMobile ? 'flex-end' : 'center'}; justify-content: center; z-index: 9999; backdrop-filter: blur(4px); padding: ${isMobile ? '0' : '1rem'};`;
+
+                    modal.innerHTML = `
+                        <div style="background: white; border-radius: ${isMobile ? '16px 16px 0 0' : '16px'}; padding: ${isMobile ? '1.5rem' : '2rem'}; max-width: 500px; width: ${isMobile ? '100%' : '90%'}; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); animation: slideIn 0.2s ease-out;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: #1f2937;">Add IP Address</h3>
+                                <button onclick="closeAddIPDialog()" style="background: none; border: none; cursor: pointer; padding: 0.5rem; color: #6b7280; transition: color 0.2s;" onmouseover="this.style.color='#1f2937'" onmouseout="this.style.color='#6b7280'">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #374151;">IP Address</label>
+                                <input type="text" id="modal-ip-address" placeholder="192.168.1.1" 
+                                    style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.9375rem; transition: border-color 0.2s; font-family: monospace;"
+                                    onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'"
+                                    onkeypress="if(event.key === 'Enter') addIPFromDialog()">
+                                <p style="margin: 0.5rem 0 0 0; font-size: 0.75rem; color: #6b7280;">Enter a valid IPv4 address (e.g., 192.168.1.1)</p>
+                            </div>
+                            
+                            <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                                <button onclick="closeAddIPDialog()" 
+                                    style="padding: 0.625rem 1.25rem; background: #f3f4f6; color: #374151; border: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: background 0.2s;"
+                                    onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                    Cancel
+                                </button>
+                                <button onclick="addIPFromDialog()" 
+                                    style="padding: 0.625rem 1.25rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);"
+                                    onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(102, 126, 234, 0.4)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(102, 126, 234, 0.3)'">
+                                    Add IP Address
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    modal.addEventListener('click', function (e) {
+                        if (e.target === modal) {
+                            closeAddIPDialog();
+                        }
+                    });
+
+                    document.body.appendChild(modal);
+                    setTimeout(() => document.getElementById('modal-ip-address').focus(), 100);
+                };
+
+                window.closeAddIPDialog = function () {
+                    const modal = document.getElementById('add-ip-modal');
+                    if (modal) modal.remove();
+                };
+
+                window.addIPFromDialog = async function () {
+                    const ipInput = document.getElementById('modal-ip-address');
+                    const ipAddress = ipInput.value.trim();
+
+                    if (!ipAddress) {
+                        showWebhookMessage('Please enter an IP address.', 'error');
+                        return;
+                    }
+
+                    const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+                    if (!ipRegex.test(ipAddress)) {
+                        showWebhookMessage('Please enter a valid IP address.', 'error');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/method/iswitch.portal_api.add_whitelisted_ip?whitelisted_ip=' + encodeURIComponent(ipAddress), {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        const res = await response.json();
+
+                        if (res.message && res.message.success) {
+                            showWebhookMessage('IP address added successfully!', 'success');
+                            closeAddIPDialog();
+                            setTimeout(() => loadIPWhitelist(), 1500);
+                        } else {
+                            throw new Error(res.message && res.message.error || 'Failed to add IP address');
+                        }
+                    } catch (err) {
+                        console.error('Error adding IP:', err);
+                        showWebhookMessage(err.message || 'Failed to add IP address.', 'error');
+                    }
+                };
+
+                window.deleteIPAddress = function (ipName) {
+                    // Create custom confirmation modal
+                    const modal = document.createElement('div');
+                    modal.id = 'delete-ip-modal';
+                    const isMobile = window.innerWidth <= 768;
+                    modal.style.cssText = `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: ${isMobile ? 'flex-end' : 'center'}; justify-content: center; z-index: 9999; backdrop-filter: blur(4px); padding: ${isMobile ? '0' : '1rem'};`;
+
+                    modal.innerHTML = `
+                        <div style="background: white; border-radius: ${isMobile ? '16px 16px 0 0' : '16px'}; padding: ${isMobile ? '1.5rem' : '2rem'}; max-width: 450px; width: ${isMobile ? '100%' : '90%'}; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); animation: slideIn 0.2s ease-out;">
+                            <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="width: 48px; height: 48px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg fill="none" stroke="#dc2626" viewBox="0 0 24 24" width="24" height="24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0 0 0.5rem 0; font-size: 1.125rem; font-weight: 700; color: #1f2937;">Delete IP Address</h3>
+                                    <p style="margin: 0; font-size: 0.875rem; color: #6b7280; line-height: 1.5;">Are you sure you want to delete this IP address? This action cannot be undone.</p>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                                <button onclick="closeDeleteIPDialog()" 
+                                    style="padding: 0.625rem 1.25rem; background: #f3f4f6; color: #374151; border: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: background 0.2s;"
+                                    onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                    Cancel
+                                </button>
+                                <button onclick="confirmDeleteIP('${ipName}')" 
+                                    style="padding: 0.625rem 1.25rem; background: #dc2626; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);"
+                                    onmouseover="this.style.background='#b91c1c'; this.style.boxShadow='0 4px 8px rgba(220, 38, 38, 0.4)'"
+                                    onmouseout="this.style.background='#dc2626'; this.style.boxShadow='0 2px 4px rgba(220, 38, 38, 0.3)'">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    modal.addEventListener('click', function (e) {
+                        if (e.target === modal) {
+                            closeDeleteIPDialog();
+                        }
+                    });
+
+                    document.body.appendChild(modal);
+                };
+
+                window.closeDeleteIPDialog = function () {
+                    const modal = document.getElementById('delete-ip-modal');
+                    if (modal) modal.remove();
+                };
+
+                window.confirmDeleteIP = async function (ipName) {
+                    closeDeleteIPDialog();
+
+                    try {
+                        const response = await fetch('/api/method/iswitch.portal_api.delete_whitelisted_ip?ip_name=' + encodeURIComponent(ipName), {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        const res = await response.json();
+
+                        if (res.message && res.message.success) {
+                            showWebhookMessage('IP address deleted successfully!', 'success');
+                            const row = document.getElementById('ip-row-' + ipName);
+                            if (row) row.remove();
+                        } else {
+                            throw new Error(res.message && res.message.error || 'Failed to delete IP address');
+                        }
+                    } catch (err) {
+                        console.error('Error deleting IP:', err);
+                        showWebhookMessage(err.message || 'Failed to delete IP address.', 'error');
+                    }
+                };
+
+                // Export functions
+                window.exportOrders = function () {
+                    const status = document.querySelector('select[name="status"]')?.value || '';
+                    const fromDate = document.querySelector('input[name="from_date"]')?.value || '';
+                    const toDate = document.querySelector('input[name="to_date"]')?.value || '';
+
+                    const queryParams = new URLSearchParams({
+                        status: status,
+                        from_date: fromDate,
+                        to_date: toDate
+                    });
+
+                    window.open('/api/method/iswitch.portal_api.export_merchant_orders?' + queryParams.toString(), '_blank');
+                };
+
+                window.exportLedger = function () {
+                    alert('exportLedger function called!');
+                    const typeElement = document.querySelector('select[name="transaction_type"]');
+                    console.log('Type element:', typeElement);
+                    console.log('Type element value:', typeElement?.value);
+
+                    const type = typeElement?.value || '';
+                    const fromDate = document.querySelector('input[name="from_date"]')?.value || '';
+                    const toDate = document.querySelector('input[name="to_date"]')?.value || '';
+
+                    console.log('Exporting with:', { transaction_type: type, from_date: fromDate, to_date: toDate });
+
+                    const queryParams = new URLSearchParams({
+                        transaction_type: type,
+                        from_date: fromDate,
+                        to_date: toDate
+                    });
+
+                    console.log('Query string:', queryParams.toString());
+                    window.open('/api/method/iswitch.portal_api.export_merchant_ledger?' + queryParams.toString(), '_blank');
+                };
+
+                window.exportVANLogs = function () {
+                    const fromDate = document.querySelector('input[name="from_date"]')?.value || '';
+                    const toDate = document.querySelector('input[name="to_date"]')?.value || '';
+
+                    const queryParams = new URLSearchParams({
+                        from_date: fromDate,
+                        to_date: toDate
+                    });
+
+                    window.open('/api/method/iswitch.portal_api.export_merchant_van_logs?' + queryParams.toString(), '_blank');
+                };
+
+                // Function to open profile modal
+                window.openProfileModal = async function () {
+                    console.log('Loading profile page...');
+
+                    document.getElementById('main-content').innerHTML = `
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h3>Merchant Profile</h3>
+                            </div>
+                            <div id="profile-content" style="text-align: center; padding: 2rem;">
+                                <div class="loading-spinner" style="margin: 0 auto;"></div>
+                                <p style="margin-top: 1rem; color: #6b7280;">Loading profile...</p>
+                            </div>
+                        </div>
+                    `;
+
+                    try {
+                        const response = await fetch('/api/method/iswitch.portal_api.get_merchant_profile_page', {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        const data = await response.json();
+
+                        if (data.message) {
+                            document.getElementById('profile-content').innerHTML = data.message;
+                        } else {
+                            throw new Error('No data received');
+                        }
+                    } catch (error) {
+                        console.error('Error loading profile:', error);
+                        document.getElementById('profile-content').innerHTML = `
+                            <div style="padding: 2rem; text-align: center;">
+                                <p style="color: #ef4444;">Error loading profile. Please try again.</p>
+                            </div>
+                        `;
+                    }
+                };
+
+                // Verify functions are loaded (for debugging)
+                console.log('Portal functions loaded:', {
+                    loadDashboard: typeof window.loadDashboard,
+                    loadTransactions: typeof window.loadTransactions,
+                    loadLedger: typeof window.loadLedger,
+                    loadVANLogs: typeof window.loadVANLogs,
+                    loadAPIKeys: typeof window.loadAPIKeys,
+                    loadWebhooks: typeof window.loadWebhooks,
+                    loadIPWhitelist: typeof window.loadIPWhitelist,
+                    openProfileModal: typeof window.openProfileModal
+                });
+            </script>
+
+            <script src="/assets/iswitch/js/portal.js"></script>
+
+</body>
+
+</html>

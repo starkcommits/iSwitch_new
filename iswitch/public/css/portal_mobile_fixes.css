@@ -1,0 +1,286 @@
+/* RESPONSIVE MOBILE FIXES - Comprehensive Mobile Optimization */
+
+/* Mobile: Compact spacing and fitted cards */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 0.75rem !important;
+        padding-top: 3.5rem !important;
+    }
+
+    .page-header {
+        margin-bottom: 1rem !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    .page-header h1 {
+        font-size: 1.25rem !important;
+        line-height: 1.3 !important;
+    }
+
+    .page-header p {
+        font-size: 0.875rem !important;
+    }
+
+    .stats-grid {
+        gap: 0.625rem !important;
+        margin-bottom: 1rem !important;
+        grid-template-columns: 1fr !important;
+    }
+
+    .stat-card {
+        padding: 0.875rem !important;
+    }
+
+    .stat-card-value {
+        font-size: 1.5rem !important;
+    }
+
+    .stat-card-label {
+        font-size: 0.75rem !important;
+    }
+
+    .stat-card-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .stat-card-icon svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    /* Tables remain in tabular form with horizontal scroll */
+    .table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    table {
+        min-width: 600px !important;
+    }
+
+    th, td {
+        padding: 0.75rem 0.5rem !important;
+        font-size: 0.8125rem !important;
+    }
+
+    th {
+        font-size: 0.75rem !important;
+        white-space: nowrap !important;
+    }
+
+    /* Modal improvements */
+    [style*="position: fixed"][style*="z-index: 9999"] {
+        padding: 1rem !important;
+    }
+
+    [style*="position: fixed"][style*="z-index: 9999"] > div {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 16px 16px 0 0 !important;
+    }
+
+    /* Webhook config mobile */
+    .webhook-input-container {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+
+    .webhook-input-container input {
+        width: 100% !important;
+    }
+
+    .webhook-input-container button {
+        width: 100% !important;
+    }
+
+    /* API keys mobile */
+    .api-key-display {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        align-items: stretch !important;
+    }
+
+    .api-key-value {
+        word-break: break-all;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Tablet: 2-column layout with compact spacing */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .main-content {
+        padding: 1rem !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    .stat-card {
+        padding: 1rem !important;
+    }
+
+    .page-header {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    #wallet-balance-header {
+        width: auto !important;
+        min-width: 280px;
+    }
+
+    .table-filters {
+        flex-wrap: wrap !important;
+    }
+
+    .filter-group {
+        flex: 1 1 calc(50% - 0.5rem) !important;
+        min-width: 200px !important;
+        max-width: 300px !important;
+    }
+}
+
+/* Table responsive behavior */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    table {
+        min-width: 800px !important;
+    }
+
+    th,
+    td {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.875rem !important;
+    }
+}
+
+/* On mobile, use horizontal scroll for tables */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        position: relative !important;
+    }
+
+    table {
+        min-width: 600px !important;
+        width: 100% !important;
+    }
+
+    /* Remove scroll indicator - tables will scroll naturally */
+}
+
+/* Touch-friendly buttons */
+@media (max-width: 768px) {
+    .btn {
+        min-height: var(--min-touch-target) !important;
+        width: auto !important;
+        min-width: auto !important;
+    }
+
+    .table-header {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .table-header .btn {
+        width: auto !important;
+        min-width: auto !important;
+        align-self: flex-start !important;
+    }
+
+    .filter-group {
+        flex: 1 1 100%;
+    }
+
+    .filter-group input,
+    .filter-group select {
+        width: 100%;
+    }
+}
+
+/* Compact wallet card on mobile */
+@media (max-width: 768px) {
+    #wallet-balance-header {
+        padding: 0.75rem 1rem !important;
+        gap: 0.75rem !important;
+    }
+
+    #wallet-balance-amount {
+        font-size: 1.25rem !important;
+    }
+
+    #wallet-balance-header svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.625rem !important;
+        padding-top: 3.25rem !important;
+    }
+
+    .stat-card {
+        padding: 0.75rem !important;
+    }
+
+    .stat-card-value {
+        font-size: 1.25rem !important;
+    }
+
+    .page-header h1 {
+        font-size: 1.125rem !important;
+    }
+
+    #wallet-balance-header {
+        padding: 0.875rem !important;
+    }
+
+    #wallet-balance-amount {
+        font-size: 1.375rem !important;
+    }
+
+    .mobile-table-card {
+        padding: 0.875rem !important;
+    }
+
+    .mobile-table-card-row {
+        padding: 0.625rem 0 !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+
+    .mobile-table-card-value {
+        text-align: left !important;
+        width: 100%;
+    }
+
+    .btn {
+        min-height: 44px !important;
+        font-size: 0.875rem !important;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+        min-height: 44px !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+}

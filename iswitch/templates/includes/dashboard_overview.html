@@ -1,0 +1,78 @@
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-card-header">
+            <span class="stat-card-title">Total Orders</span>
+            <div class="stat-card-icon primary">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+            </div>
+        </div>
+        <div class="stat-card-value">{{ (stats.total_orders or 0)|int }}</div>
+        <div class="stat-card-label">All time orders</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-header">
+            <span class="stat-card-title">Processed</span>
+            <div class="stat-card-icon success">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+        <div class="stat-card-value">{{ (stats.processed_orders or 0)|int }}</div>
+        <div class="stat-card-label">₹{{ "{:,.2f}".format(stats.total_processed_amount or 0) }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-header">
+            <span class="stat-card-title">Pending</span>
+            <div class="stat-card-icon warning">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+        <div class="stat-card-value">{{ (stats.pending_orders or 0)|int }}</div>
+        <div class="stat-card-label">₹{{ "{:,.2f}".format(stats.total_pending_amount or 0) }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-card-header">
+            <span class="stat-card-title">Failed</span>
+            <div class="stat-card-icon danger">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+        <div class="stat-card-value">{{ (stats.cancelled_orders or 0)|int }}</div>
+        <div class="stat-card-label">₹{{ "{:,.2f}".format(stats.total_cancelled_amount or 0) }}</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-header">
+        <h3>Recent Orders</h3>
+        <button class="btn btn-secondary btn-sm" onclick="loadTransactions()">View All</button>
+    </div>
+
+    <div id="transactions-content" hx-get="/api/method/iswitch.portal_api.get_merchant_orders?page=1&limit=5"
+        hx-trigger="load" hx-swap="innerHTML">
+        <div style="text-align: center; padding: 2rem;">
+            <div class="loading-spinner" style="margin: 0 auto;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Update merchant name in sidebar
+    if (document.getElementById('merchant-name')) {
+        document.getElementById('merchant-name').textContent = '{{ merchant.name }}';
+    }
+</script>

@@ -1,0 +1,128 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:integration_name",
+ "creation": "2025-07-05 01:52:13.078029",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "integration_detail_section",
+  "integration_name",
+  "column_break_1",
+  "integration_type",
+  "column_break_czha",
+  "is_active",
+  "section_break_1",
+  "api_endpoint",
+  "client_id",
+  "column_break_2",
+  "secret_key",
+  "webhook_url",
+  "section_break_bcqa",
+  "product_pricing"
+ ],
+ "fields": [
+  {
+   "fieldname": "integration_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Integration Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "integration_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Integration Type",
+   "options": "Payment Gateway\nUPI\nWallet\nBank Transfer",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "API Configuration"
+  },
+  {
+   "fieldname": "api_endpoint",
+   "fieldtype": "Data",
+   "label": "API Endpoint"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "secret_key",
+   "fieldtype": "Password",
+   "label": "Secret Key"
+  },
+  {
+   "fieldname": "webhook_url",
+   "fieldtype": "Data",
+   "label": "Webhook URL"
+  },
+  {
+   "fieldname": "section_break_bcqa",
+   "fieldtype": "Section Break",
+   "label": "Products"
+  },
+  {
+   "fieldname": "product_pricing",
+   "fieldtype": "Table",
+   "label": "Product Pricing",
+   "options": "Product Pricing"
+  },
+  {
+   "fieldname": "integration_detail_section",
+   "fieldtype": "Section Break",
+   "label": "Integration Detail"
+  },
+  {
+   "fieldname": "column_break_czha",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Password",
+   "label": "Client ID"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-11 00:03:23.809822",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Integration",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

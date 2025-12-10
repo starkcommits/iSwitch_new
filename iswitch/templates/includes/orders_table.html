@@ -1,0 +1,122 @@
+<div class="table-filters"
+    style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; padding: 1.5rem; background: #ffffff; border-bottom: 1px solid var(--border-color); border-radius: 8px 8px 0 0;">
+    <div class="filter-group" style="flex: 1; min-width: 200px; max-width: 250px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">Status</label>
+        <div style="position: relative;">
+            <select name="status" class="form-control"
+                style="width: 100%; height: 42px; padding: 0 1rem; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.65em auto;"
+                hx-get="/api/method/iswitch.portal_api.get_merchant_orders" hx-trigger="change"
+                hx-include="[name='from_date'], [name='to_date']" hx-target="#transactions-content">
+                <option value="">All Status</option>
+                <option value="Processed" {% if filters.status=='Processed' %}selected{% endif %}>Processed</option>
+                <option value="Processing" {% if filters.status=='Processing' %}selected{% endif %}>Processing</option>
+                <option value="Cancelled" {% if filters.status=='Cancelled' %}selected{% endif %}>Cancelled</option>
+                <option value="Reversed" {% if filters.status=='Reversed' %}selected{% endif %}>Reversed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="filter-group" style="flex: 1; min-width: 250px; max-width: 300px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">From
+            Date & Time</label>
+        <input type="datetime-local" name="from_date" class="form-control" value="{{ filters.from_date or '' }}"
+            style="width: 100%; height: 42px; padding: 0 1rem;"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_orders" hx-trigger="change"
+            hx-include="[name='status'], [name='to_date']" hx-target="#transactions-content">
+    </div>
+
+    <div class="filter-group" style="flex: 1; min-width: 250px; max-width: 300px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">To
+            Date & Time</label>
+        <input type="datetime-local" name="to_date" class="form-control" value="{{ filters.to_date or '' }}"
+            style="width: 100%; height: 42px; padding: 0 1rem;"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_orders" hx-trigger="change"
+            hx-include="[name='status'], [name='from_date']" hx-target="#transactions-content">
+    </div>
+
+    <div class="filter-group" style="margin-left: auto;">
+        <button class="btn btn-secondary" onclick="exportOrders()" {% if not orders %}disabled{% endif %}
+            style="display: inline-flex; align-items: center; gap: 0.5rem; height: 42px; padding: 0 1.25rem; font-weight: 500; white-space: nowrap;{% if not orders %} opacity: 0.5; cursor: not-allowed;{% endif %}">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Export to Excel
+        </button>
+    </div>
+</div>
+
+{% if orders %}
+<table id="transactions-table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Fee</th>
+            <th>Status</th>
+            <th>UTR</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td data-label="Order ID">{{ order.name or '-' }}</td>
+            <td data-label="Customer">{{ order.customer_name or '-' }}</td>
+            <td data-label="Amount">₹{{ "{:,.2f}".format(order.order_amount or 0) }}</td>
+            <td data-label="Fee">₹{{ "{:,.2f}".format(order.fee or 0) }}</td>
+            <td data-label="Status">
+                <span class="badge 
+                    {% if order.status == 'Processed' %}badge-success
+                    {% elif order.status == 'Processing' %}badge-warning
+                    {% elif order.status == 'Cancelled' %}badge-danger
+                    {% else %}badge-info{% endif %}">
+                    {{ order.status or 'Unknown' }}
+                </span>
+            </td>
+            <td data-label="UTR">{{ order.utr or '-' }}</td>
+            <td data-label="Date">{{ frappe.utils.format_datetime(order.creation, "dd MMM yyyy, HH:mm") if order.creation else '-' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if pagination %}
+<div class="pagination">
+    <div class="pagination-info">
+        Showing {{ ((pagination.page - 1) * pagination.limit) + 1 }} to {{ [pagination.page * pagination.limit,
+        pagination.total]|min }} of {{ pagination.total }} results
+    </div>
+    <div class="pagination-controls" style="align-items: center;">
+        {% if pagination.page > 1 %}
+        <button class="btn btn-secondary btn-sm"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_orders?page={{ pagination.page - 1 }}&limit={{ pagination.limit }}&status={{ filters.status or '' }}&from_date={{ filters.from_date or '' }}&to_date={{ filters.to_date or '' }}"
+            hx-target="#transactions-content" hx-swap="innerHTML">
+            Previous
+        </button>
+        {% endif %}
+        <span style="padding: 0 1rem;">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.page < pagination.pages %} <button class="btn btn-secondary btn-sm"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_orders?page={{ pagination.page + 1 }}&limit={{ pagination.limit }}&status={{ filters.status or '' }}&from_date={{ filters.from_date or '' }}&to_date={{ filters.to_date or '' }}"
+            hx-target="#transactions-content" hx-swap="innerHTML">
+            Next
+            </button>
+            {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="64" height="64">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <h3>No Order found</h3>
+    <p>You don't have any order yet</p>
+</div>
+{% endif %}

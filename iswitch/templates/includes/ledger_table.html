@@ -1,0 +1,120 @@
+<div class="table-filters"
+    style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; padding: 1.5rem; background: #ffffff; border-bottom: 1px solid var(--border-color); border-radius: 8px 8px 0 0;">
+    <div class="filter-group" style="flex: 1; min-width: 200px; max-width: 250px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">Type</label>
+        <div style="position: relative;">
+            <select name="transaction_type" class="form-control"
+                style="width: 100%; height: 42px; padding: 0 1rem; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.65em auto;"
+                hx-get="/api/method/iswitch.portal_api.get_merchant_ledger" hx-trigger="change"
+                hx-include="[name='from_date'], [name='to_date']" hx-target="#ledger-content">
+                <option value="">All Types</option>
+                <option value="Credit" {% if filters.transaction_type=='Credit' %}selected{% endif %}>Credit</option>
+                <option value="Debit" {% if filters.transaction_type=='Debit' %}selected{% endif %}>Debit</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="filter-group" style="flex: 1; min-width: 250px; max-width: 300px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">From
+            Date & Time</label>
+        <input type="datetime-local" name="from_date" class="form-control" value="{{ filters.from_date or '' }}"
+            style="width: 100%; height: 42px; padding: 0 1rem;"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_ledger" hx-trigger="change"
+            hx-include="[name='transaction_type'], [name='to_date']" hx-target="#ledger-content">
+    </div>
+
+    <div class="filter-group" style="flex: 1; min-width: 250px; max-width: 300px;">
+        <label
+            style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--text-secondary);">To
+            Date & Time</label>
+        <input type="datetime-local" name="to_date" class="form-control" value="{{ filters.to_date or '' }}"
+            style="width: 100%; height: 42px; padding: 0 1rem;"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_ledger" hx-trigger="change"
+            hx-include="[name='transaction_type'], [name='from_date']" hx-target="#ledger-content">
+    </div>
+
+    <div class="filter-group" style="margin-left: auto;">
+        <button class="btn btn-secondary" onclick="exportLedger()" {% if not ledger %}disabled{% endif %}
+            style="display: inline-flex; align-items: center; gap: 0.5rem; height: 42px; padding: 0 1.25rem; font-weight: 500; white-space: nowrap;{% if not ledger %} opacity: 0.5; cursor: not-allowed;{% endif %}">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Export to Excel
+        </button>
+    </div>
+</div>
+
+{% if ledger %}
+<table>
+    <thead>
+        <tr>
+            <th style="padding: 1rem 0.75rem;">TXN ID</th>
+            <th style="padding: 1rem 0.75rem;">Order ID</th>
+            <th style="padding: 1rem 0.75rem;">Type</th>
+            <th style="white-space: nowrap; padding: 1rem 0.75rem;">TXN AMOUNT</th>
+            <th style="white-space: nowrap; padding: 1rem 0.75rem;">Opening Balance</th>
+            <th style="white-space: nowrap; padding: 1rem 0.75rem;">Closing Balance</th>
+            <th style="white-space: nowrap; padding: 1rem 0.75rem;">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in ledger %}
+        <tr>
+            <td style="padding: 1rem 0.75rem;" data-label="TXN ID">{{ entry.transaction_id or '-' }}</td>
+            <td style="padding: 1rem 0.75rem;" data-label="Order ID">{{ entry.order or '-' }}</td>
+            <td style="padding: 1rem 0.75rem;" data-label="Type">
+                <span
+                    class="badge {% if entry.transaction_type == 'Credit' %}badge-success{% else %}badge-warning{% endif %}">
+                    {{ entry.transaction_type or 'Unknown' }}
+                </span>
+            </td>
+            <td style="white-space: nowrap; padding: 1rem 0.75rem;" data-label="TXN Amount">₹{{ "{:,.2f}".format(entry.transaction_amount or 0)
+                }}</td>
+            <td style="padding: 1rem 0.75rem;" data-label="Opening Balance">₹{{ "{:,.2f}".format(entry.opening_balance or 0) }}</td>
+            <td style="padding: 1rem 0.75rem;" data-label="Closing Balance">₹{{ "{:,.2f}".format(entry.closing_balance or 0) }}</td>
+            <td style="white-space: nowrap; padding: 1rem 0.75rem;" data-label="Date">{{ frappe.utils.format_datetime(entry.creation, "dd
+                MMM yyyy, HH:mm") if
+                entry.creation else '-' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if pagination %}
+<div class="pagination">
+    <div class="pagination-info">
+        Showing {{ ((pagination.page - 1) * pagination.limit) + 1 }} to {{ [pagination.page * pagination.limit,
+        pagination.total]|min }} of {{ pagination.total }} results
+    </div>
+    <div class="pagination-controls" style="align-items: center;">
+        {% if pagination.page > 1 %}
+        <button class="btn btn-secondary btn-sm"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_ledger?page={{ pagination.page - 1 }}&limit={{ pagination.limit }}&transaction_type={{ filters.transaction_type or '' }}&from_date={{ filters.from_date or '' }}&to_date={{ filters.to_date or '' }}"
+            hx-target="#ledger-content" hx-swap="innerHTML">
+            Previous
+        </button>
+        {% endif %}
+        <span style="padding: 0 1rem;">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.page < pagination.pages %} <button class="btn btn-secondary btn-sm"
+            hx-get="/api/method/iswitch.portal_api.get_merchant_ledger?page={{ pagination.page + 1 }}&limit={{ pagination.limit }}&transaction_type={{ filters.transaction_type or '' }}&from_date={{ filters.from_date or '' }}&to_date={{ filters.to_date or '' }}"
+            hx-target="#ledger-content" hx-swap="innerHTML">
+            Next
+            </button>
+            {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="64" height="64">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg>
+    <h3>No ledger entries found</h3>
+    <p>Your ledger is empty</p>
+</div>
+{% endif %}

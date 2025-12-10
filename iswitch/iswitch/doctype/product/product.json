@@ -1,0 +1,66 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "field:product_name",
+  "creation": "2025-07-05 02:00:52.540578",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "product_detail_section",
+    "product_name",
+    "column_break_ncwi",
+    "is_active"
+  ],
+  "fields": [
+    {
+      "fieldname": "product_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Product Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "column_break_ncwi",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active"
+    },
+    {
+      "fieldname": "product_detail_section",
+      "fieldtype": "Section Break",
+      "label": "Product Detail"
+    }
+  ],
+  "grid_page_length": 50,
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2025-07-05 22:21:28.536012",
+  "modified_by": "Administrator",
+  "module": "iSwitch",
+  "name": "Product",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

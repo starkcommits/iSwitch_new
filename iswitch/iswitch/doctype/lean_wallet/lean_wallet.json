@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:merchant_id",
+ "creation": "2025-07-10 16:53:27.251010",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "merchant_id",
+  "column_break_vrmt",
+  "balance",
+  "column_break_xfxy",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "merchant_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Merchant Id",
+   "options": "Merchant",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_vrmt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Float",
+   "label": "Balance"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive\nFrozen"
+  },
+  {
+   "fieldname": "column_break_xfxy",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-10 17:03:51.131895",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Lean Wallet",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

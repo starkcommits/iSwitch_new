@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2025-07-05 15:50:04.752953",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product",
+  "start_value",
+  "end_value",
+  "column_break_aevl",
+  "fee_type",
+  "fee",
+  "column_break_hooo",
+  "tax_fee_type",
+  "tax_fee"
+ ],
+ "fields": [
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product",
+   "options": "Product",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_aevl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_hooo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Percentage",
+   "fieldname": "tax_fee_type",
+   "fieldtype": "Select",
+   "label": "Tax Fee Type",
+   "options": "Fixed\nPercentage"
+  },
+  {
+   "default": "18",
+   "fieldname": "tax_fee",
+   "fieldtype": "Float",
+   "label": "Tax Fee",
+   "precision": "2"
+  },
+  {
+   "fieldname": "start_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Start Value"
+  },
+  {
+   "fieldname": "end_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "End Value"
+  },
+  {
+   "default": "Fixed",
+   "fieldname": "fee_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Fee Type",
+   "options": "Fixed\nPercentage"
+  },
+  {
+   "default": "0",
+   "fieldname": "fee",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Fee",
+   "precision": "2"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-07-18 18:33:52.896088",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Product Pricing",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

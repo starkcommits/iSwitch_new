@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SVCST{YY}{MM}{DD}{#####}",
+ "creation": "2025-07-26 00:05:26.947524",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_name",
+  "mobile_number",
+  "email_id",
+  "column_break_ijku",
+  "account_number",
+  "ifsc",
+  "upi_id",
+  "customer_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "column_break_ijku",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "upi_id",
+   "fieldtype": "Data",
+   "label": "UPI ID"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID"
+  },
+  {
+   "fieldname": "customer_id",
+   "fieldtype": "Data",
+   "label": "Customer ID"
+  },
+  {
+   "fieldname": "ifsc",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "IFSC"
+  },
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Account Number",
+   "unique": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-26 01:35:19.049453",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Customer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,27 @@
+<div onclick="openProfileModal()"
+    style="display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; transition: all 0.2s;"
+    onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+    onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+    <!-- Avatar Circle with Initials -->
+    <div
+        style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: white; flex-shrink: 0;">
+        {{ merchant.company_name[:2].upper() if merchant.company_name else "M" }}
+    </div>
+
+    <!-- Profile Info -->
+    <div style="flex: 1; min-width: 0;">
+        <div
+            style="font-weight: 600; font-size: 0.875rem; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ merchant.company_name or "Merchant" }}
+        </div>
+        <div
+            style="font-size: 0.75rem; color: rgba(255,255,255,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ merchant.email or "No email" }}
+        </div>
+    </div>
+
+    <!-- Chevron Icon -->
+    <svg fill="none" stroke="rgba(255,255,255,0.6)" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink: 0;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+</div>

@@ -1,0 +1,50 @@
+{
+ "app": "iSwitch",
+ "charts": [],
+ "content": "[{\"id\":\"Yxkan86ryx\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Settings</span>\",\"col\":12}},{\"id\":\"nMRU5mjdqI\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Wallet Balance\",\"col\":6}},{\"id\":\"wEiMBvrvFo\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"API Config\",\"col\":6}},{\"id\":\"nHNzL2Xo4J\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"-X5EO5tMvG\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Test\",\"col\":6}},{\"id\":\"9RoVhgJH-o\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Whitelist Webhook\",\"col\":6}}]",
+ "creation": "2025-07-20 14:35:24.501498",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Test",
+   "label": "Test"
+  },
+  {
+   "custom_block_name": "API Config",
+   "label": "API Config"
+  },
+  {
+   "custom_block_name": "Whitelist Webhook",
+   "label": "Whitelist Webhook"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Settings",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-08-08 17:26:17.059236",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Settings",
+ "number_cards": [
+  {
+   "label": "Wallet Balance",
+   "number_card_name": "Wallet Balance"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 6.0,
+ "shortcuts": [],
+ "title": "Settings",
+ "type": "Workspace"
+}

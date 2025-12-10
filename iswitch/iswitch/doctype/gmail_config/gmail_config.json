@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-28 14:24:29.016449",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "email",
+  "signed_by",
+  "column_break_zija",
+  "app_password",
+  "column_break_nwnv",
+  "sender_email"
+ ],
+ "fields": [
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "column_break_zija",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "app_password",
+   "fieldtype": "Password",
+   "label": "App Password"
+  },
+  {
+   "fieldname": "column_break_nwnv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sender_email",
+   "fieldtype": "Data",
+   "label": "Sender Email"
+  },
+  {
+   "fieldname": "signed_by",
+   "fieldtype": "Data",
+   "label": "Signed By"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-07-28 15:16:26.976638",
+ "modified_by": "Administrator",
+ "module": "iSwitch",
+ "name": "Gmail Config",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
