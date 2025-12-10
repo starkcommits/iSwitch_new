@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd \"Merchant Portal\" && yarn install",
-    "dev": "cd \"Merchant Portal\" && yarn dev",
-    "build": "cd \"Merchant Portal\" && yarn build"
+    "postinstall": "cd \"Merchant\" && yarn install",
+    "dev": "cd \"Merchant\" && yarn dev",
+    "build": "cd \"Merchant\" && yarn build"
   },
   "keywords": [],
   "author": "",
