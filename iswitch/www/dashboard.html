@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/assets/iswitch/dashboard/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Frappe UI Starter</title>
-    <script type="module" crossorigin src="/assets/iswitch/dashboard/assets/index-BaMxAIxt.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/iswitch/dashboard/assets/index-EGnOqSmA.css">
-  </head>
-  <body>
-    <div id="app"></div>
-  
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/assets/iswitch/dashboard/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iSwitch Portal</title>
+  <script type="module" crossorigin src="/assets/iswitch/dashboard/assets/index-Czal8QD0.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/iswitch/dashboard/assets/index-D_6-8T7Z.css">
+</head>
+
+<body>
+  <div id="app"></div>
+
           <script>
               {% for key in boot %}
               window["{{ key }}"] = {{ boot[key] | tojson }};
@@ -18,4 +20,5 @@
           </script>
           </body>
           
+
 </html>

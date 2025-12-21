@@ -274,6 +274,4 @@ override_whitelisted_methods = {
 # }
 
 
-website_route_rules = [
-    {'from_route': '/dashboard/<path:app_path>', 'to_route': 'dashboard'}
-]
+website_route_rules = [{'from_route': '/admin/<path:app_path>', 'to_route': 'admin'},{'from_route': '/dashboard/<path:app_path>', 'to_route': 'dashboard'}]

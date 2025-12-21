@@ -545,20 +545,68 @@ def get_virtual_accounts():
 
 @frappe.whitelist()
 def update_webhook_url(webhook_url):
-    """Update webhook URL"""
+    """Update webhook URL and manage Webhook doctype"""
     try:
         merchant_email = frappe.session.user
         merchant_id = frappe.db.get_value("Merchant", {"company_email": merchant_email}, "name")
         
         if not merchant_id:
             frappe.throw(_("Merchant not found"))
-        
+            
         merchant = frappe.get_doc("Merchant", merchant_id)
-        merchant.webhook = webhook_url
-        merchant.save(ignore_permissions=True)
         
-        return {"success": True, "message": "Webhook URL updated successfully"}
-    
+        # Check if Webhook doctype exists for this merchant
+        # We use merchant_email (user) as the name for Webhook doctype to be consistent with user snippet
+        # ideally it should be unique. The user snippet used `frappe.session.user`.
+        # Since merchant portal user IS the merchant email, this works.
+        webhook_name = merchant_email 
+        
+        if not webhook_url:
+             # Handle case where webhook is being cleared?
+             # For now just update the merchant doc as the snippet didn't specify deletion logic
+             merchant.webhook = webhook_url
+             merchant.save(ignore_permissions=True)
+             return {"success": True, "message": "Webhook removed"}
+
+        exists = frappe.db.exists("Webhook", webhook_name)
+        
+        webhook_json_structure = """{
+            "crn":"{{doc.order}}",
+            "utr":"{{doc.transaction_reference_id}}",
+            "status": "{{doc.status}}",
+            "clientRefID": "{{doc.client_ref_id}}"
+        }"""
+        
+        if not exists:
+            frappe.get_doc({
+                'doctype': 'Webhook',
+                '__newname': webhook_name,
+                'webhook_doctype': 'Transaction',
+                'webhook_docevent': 'on_submit',
+                'condition': f"(doc.merchant == '{merchant_email}') and (doc.status in ['Success', 'Failed', 'Reversed'])",
+                'request_url': webhook_url,
+                'request_method': 'POST',
+                'request_structure': 'JSON',
+                'background_jobs_queue': 'long',
+                'webhook_json': webhook_json_structure
+            }).insert(ignore_permissions=True)
+            
+            merchant.webhook = webhook_url
+            merchant.save(ignore_permissions=True)
+            return {"success": True, "message": "Webhook created successfully"}
+
+        elif merchant.webhook != webhook_url:
+            webhook_doc = frappe.get_doc("Webhook", webhook_name)
+            webhook_doc.request_url = webhook_url
+            webhook_doc.save(ignore_permissions=True)
+
+            merchant.webhook = webhook_url
+            merchant.save(ignore_permissions=True)
+            return {"success": True, "message": "Webhook updated successfully"}
+        
+        else:
+            return {"success": True, "message": "Webhook unchanged"}
+
     except Exception as e:
         frappe.log_error(f"Error in update_webhook_url: {str(e)}", "Merchant Portal API")
         frappe.throw(_("Error updating webhook URL"))

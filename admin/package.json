@@ -1,0 +1,40 @@
+{
+  "name": "frappe-ui-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=/assets/iswitch/admin/ && yarn copy-html-entry",
+    "preview": "vite preview",
+    "lint": "biome check --write .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "copy-html-entry": "cp ../iswitch/public/admin/index.html ../iswitch/www/admin.html"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "feather-icons": "^4.29.2",
+    "frappe-ui": "^0.1.192",
+    "lucide-vue-next": "^0.562.0",
+    "radix-vue": "^1.9.17",
+    "socket.io-client": "^4.7.2",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vitest/coverage-v8": "^2.1.8",
+    "autoprefixer": "^10.4.2",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.8"
+  }
+}
