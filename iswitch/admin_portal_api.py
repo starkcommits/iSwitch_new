@@ -199,16 +199,14 @@ def get_transactions(filter_data=None, page=1, page_size=20):
             SELECT 
                 t.name as id,
                 t.order as order_id,
-                m.company_name as merchant_name,
+                t.merchant as merchant_name,
                 t.product as product_name,
                 t.amount,
                 t.status,
                 t.transaction_date as date,
-                t.transaction_reference_id as ref_id,
-                t.integration,
-                t.utr
+                t.transaction_reference_id as utr,
+                t.integration
             FROM `tabTransaction` t
-            LEFT JOIN `tabMerchant` m ON t.merchant = m.name
             WHERE {where_clause}
             ORDER BY t.transaction_date DESC
             LIMIT {int(page_size)} OFFSET {start}
@@ -386,12 +384,12 @@ def update_merchant(merchant, status, integration, webhook, pricing=None):
                     'request_structure': 'JSON',
                     'background_jobs_queue': 'long',
                     'webhook_json': webhook_json_structure
-                }).insert(ignore_permissions=True)
+                }).insert()
             elif doc.webhook != webhook:
                 # Update existing webhook if URL changed
                 webhook_doc = frappe.get_doc("Webhook", merchant)
                 webhook_doc.request_url = webhook
-                webhook_doc.save(ignore_permissions=True)
+                webhook_doc.save()
         
         doc.webhook = webhook
         
@@ -412,7 +410,7 @@ def update_merchant(merchant, status, integration, webhook, pricing=None):
                     "end_value": p.get("end_value")
                 })
         
-        doc.save(ignore_permissions=True)
+        doc.save()
         frappe.db.commit()
         
         return {"success": True}
@@ -439,7 +437,7 @@ def bulk_update_merchants(merchants, action, value):
                 doc.status = value
             elif action == 'update_integration':
                 doc.integration = value
-            doc.save(ignore_permissions=True)
+            doc.save()
             
         frappe.db.commit()
         
@@ -711,7 +709,7 @@ def generate_api_keys():
         user_doc.api_key = frappe.generate_hash(length=30) 
         raw = frappe.generate_hash(length=15)
         user_doc.api_secret = raw
-        user_doc.save(ignore_permissions=True)
+        user_doc.save()
         
         frappe.db.commit()
         
@@ -773,7 +771,7 @@ def get_admin_profile():
         return {
             "name": user.full_name,
             "email": user.email,
-            "role": "Administrator" 
+            "role": user.role_profile_name 
         }
     except Exception as e:
         frappe.log_error(f"Error in get_admin_profile: {str(e)}", "Admin Portal API")
@@ -804,7 +802,7 @@ def onboard_merchant(company_name, email, password, pancard="PENDING"):
         user.new_password = password
         user.user_type = "System User"
         user.module_profile = "Blinkpe" # Aligned with signup
-        user.save(ignore_permissions=True)
+        user.save()
         
         frappe.set_user(user.name)
         # Add Merchant Role
