@@ -74,8 +74,8 @@ router.beforeEach(async (to, from, next) => {
 
 	if (to.name === "Login" && isLoggedIn) {
 		next({ name: "Dashboard" })
-	} else if (to.name !== "Login" && !isLoggedIn) {
-		next({ name: "Login" })
+	} else if (!isLoggedIn) {
+		window.location.href = '/login'
 	} else {
 		next()
 	}
