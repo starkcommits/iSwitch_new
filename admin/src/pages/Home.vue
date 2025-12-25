@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="max-w-[1400px] mx-auto">
     <div class="dashboard-header">
       <div>
         <h1 class="page-title">Dashboard</h1>
@@ -21,7 +21,7 @@
         label="Total Orders"
         :value="metrics.transactions.toLocaleString()"
         :trend="0"
-        :description="formatCurrency(metrics.totalRevenue)"
+        :description="formatCurrency(metrics.totalOrdersAmount)"
         variant="info"
       >
         <template #icon>
@@ -136,10 +136,7 @@
         :per-page="5"
       >
         <template #cell-customer="{ value }">
-          <div class="customer-cell">
-            <div class="customer-avatar">{{ value.charAt(0) }}</div>
-            <span>{{ value }}</span>
-          </div>
+          <span class="font-medium">{{ value }}</span>
         </template>
 
       </DataTable>
@@ -177,7 +174,8 @@ const metrics = ref({
   pendingOrders: 0,
   cancelledOrders: 0,
   totalPendingAmount: 0,
-  totalCancelledAmount: 0
+  totalCancelledAmount: 0,
+  totalOrdersAmount: 0
 })
 
 const statusData = ref({
@@ -210,7 +208,8 @@ const fetchDashboardStats = async () => {
           pendingOrders: data.stats.pending_orders || 0,
           cancelledOrders: data.stats.cancelled_orders || 0,
           totalPendingAmount: data.stats.total_pending_amount || 0,
-          totalCancelledAmount: data.stats.total_cancelled_amount || 0
+          totalCancelledAmount: data.stats.total_cancelled_amount || 0,
+          totalOrdersAmount: data.stats.total_orders_amount || 0
         }
 
         // Update status data for charts

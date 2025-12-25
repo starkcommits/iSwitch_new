@@ -14,13 +14,18 @@
       <!-- Center: Empty spacer -->
       <div class="flex-1"></div>
 
-      <!-- Right: Wallet Balance (plain text) -->
+      <!-- Right: Actions -->
       <div class="flex items-center gap-4">
-        <!-- Wallet Balance - Plain Text -->
+        <!-- Wallet Balance -->
         <div class="flex items-center gap-2">
-          <span class="text-sm text-muted-foreground">Wallet Balance:</span>
-          <span class="text-lg font-semibold">{{ formatCurrency(walletBalance) }}</span>
+          <span class="text-sm text-muted-foreground hidden sm:inline">Wallet Balance:</span>
+          <span class="text-sm font-semibold">{{ formatCurrency(walletBalance) }}</span>
         </div>
+
+        <div class="h-6 w-px bg-border"></div>
+
+        <!-- Theme Toggle -->
+        <ThemeToggle />
       </div>
     </div>
   </div>
@@ -29,9 +34,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { call } from 'frappe-ui'
+import ThemeToggle from './ThemeToggle.vue'
 
 const walletBalance = ref(0)
-
+// ... keeping existing fetchWalletBalance and formatCurrency logic ...
 // Fetch wallet balance
 const fetchWalletBalance = async () => {
   try {

@@ -85,7 +85,7 @@ const vanColumns = [
   { key: 'id', label: 'Transaction ID', sortable: true },
   { key: 'account_number', label: 'Account Number', sortable: true },
   { key: 'amount', label: 'Amount', type: 'currency', sortable: true },
-  { key: 'type', label: 'Type', sortable: true },
+  { key: 'type', label: 'Type', type: 'badge', sortable: true },
   { key: 'utr', label: 'UTR', sortable: true },
   { key: 'status', label: 'Status', type: 'badge', sortable: true },
   { key: 'date', label: 'Date', type: 'datetime', sortable: true }

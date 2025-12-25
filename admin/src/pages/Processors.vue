@@ -47,9 +47,9 @@ const processorColumns = [
   { key: 'integration_name', label: 'Name', sortable: true },
   { key: 'integration_type', label: 'Type', sortable: true },
   { key: 'api_endpoint', label: 'API Endpoint', sortable: true },
-  { key: 'client_id', label: 'Client ID', sortable: true },
+  { key: 'balance', label: 'Balance', type: 'currency', sortable: true },
   { key: 'is_active', label: 'Status', sortable: true },
-  { key: 'products', label: 'Products', sortable: false }
+  { key: 'products', label: 'Services', sortable: false }
 ]
 
 const processors = ref([])

@@ -45,7 +45,8 @@ def get_dashboard_stats():
                 SUM(CASE WHEN status IN ('Cancelled', 'Reversed') THEN 1 ELSE 0 END) as cancelled_orders,
                 SUM(CASE WHEN status = 'Processed' THEN COALESCE(order_amount, 0) ELSE 0 END) as total_processed_amount,
                 SUM(CASE WHEN status IN ('Pending', 'Processing', 'Queued') THEN COALESCE(order_amount, 0) ELSE 0 END) as total_pending_amount,
-                SUM(CASE WHEN status IN ('Cancelled', 'Reversed') THEN COALESCE(order_amount, 0) ELSE 0 END) as total_cancelled_amount
+                SUM(CASE WHEN status IN ('Cancelled', 'Reversed') THEN COALESCE(order_amount, 0) ELSE 0 END) as total_cancelled_amount,
+                SUM(COALESCE(order_amount, 0)) as total_orders_amount
             FROM `tabOrder`
             WHERE merchant_ref_id = %s
         """, (merchant_id,), as_dict=True)
@@ -64,7 +65,8 @@ def get_dashboard_stats():
                 "cancelled_orders": int(stats.get('cancelled_orders', 0)),
                 "total_processed_amount": float(stats.get('total_processed_amount', 0)),
                 "total_pending_amount": float(stats.get('total_pending_amount', 0)),
-                "total_cancelled_amount": float(stats.get('total_cancelled_amount', 0))
+                "total_cancelled_amount": float(stats.get('total_cancelled_amount', 0)),
+                "total_orders_amount": float(stats.get('total_orders_amount', 0))
             }
         }
     
@@ -83,7 +85,8 @@ def get_empty_stats():
             "cancelled_orders": 0,
             "total_processed_amount": 0,
             "total_pending_amount": 0,
-            "total_cancelled_amount": 0
+            "total_cancelled_amount": 0,
+            "total_orders_amount": 0
         }
     }
 

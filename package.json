@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd Merchant && yarn install",
+    "postinstall": "cd Merchant && yarn install && cd ../admin && yarn install",
     "dev": "cd Merchant && yarn dev",
-    "build": "cd Merchant && yarn build"
+    "build": "cd Merchant && yarn build && cd ../admin && yarn build"
   },
   "keywords": [],
   "author": "",

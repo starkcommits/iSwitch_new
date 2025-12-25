@@ -26,6 +26,7 @@ declare module 'vue' {
     TabsContent: typeof import('./src/components/ui/tabs/TabsContent.vue')['default']
     TabsList: typeof import('./src/components/ui/tabs/TabsList.vue')['default']
     TabsTrigger: typeof import('./src/components/ui/tabs/TabsTrigger.vue')['default']
+    ThemeToggle: typeof import('./src/components/ThemeToggle.vue')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
   }
 }

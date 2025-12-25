@@ -1,5 +1,5 @@
 <template>
-  <div class="orders-page">
+  <div class="max-w-[1400px] mx-auto">
     <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-3xl font-bold tracking-tight text-foreground">Orders</h1>
@@ -68,10 +68,7 @@
       :per-page="10"
     >
       <template #cell-customer="{ value }">
-        <div class="customer-cell">
-          <div class="customer-avatar">{{ value.charAt(0) }}</div>
-          <span>{{ value }}</span>
-        </div>
+        <span class="font-medium">{{ value }}</span>
       </template>
     </DataTable>
   </div>
@@ -208,121 +205,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.orders-page {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-}
-
-.filters-section {
-  padding: 1.5rem;
-  display: flex;
-  align-items: flex-end;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  min-width: 200px;
-}
-
-.filter-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.filter-select,
-.filter-input {
-  width: 100%;
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 0.625rem 1rem;
-  color: var(--color-text-primary);
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-}
-
-.filter-select:focus,
-.filter-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-}
-
-.customer-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.customer-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 0.75rem;
-  color: white;
-  flex-shrink: 0;
-}
-
-.action-btn {
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 0.5rem;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-btn:hover {
-  background: var(--color-bg-hover);
-  color: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .filters-section {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .filter-group {
-    width: 100%;
-  }
-}
+/* Scoped styles removed in favor of Tailwind utility classes */
 </style>
