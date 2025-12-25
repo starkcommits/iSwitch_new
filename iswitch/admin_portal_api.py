@@ -7,11 +7,12 @@ import json
 from datetime import datetime, timedelta
 
 def check_admin_permission():
-    if not (frappe.session.user == "Administrator" or "System Manager" in frappe.get_roles()):
-        pass 
+    # role_profile = frappe.db.get_value("User", frappe.session.user, "role_profile_name")
+    if  not (frappe.session.user == "Administrator" or "Admin" in frappe.get_roles()):
+        # pass 
         # For now, we'll be lenient to avoid blocking development, 
         # but normally we'd throw a permission error:
-        # frappe.throw(_("Access Denied: Admin privileges required"), frappe.PermissionError)
+        frappe.throw(_("Access Denied: Admin privileges required"), frappe.PermissionError)
 
 @frappe.whitelist()
 def get_dashboard_stats():

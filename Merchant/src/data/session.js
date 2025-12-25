@@ -37,6 +37,14 @@ export const session = reactive({
 			window.location.href = "/login?redirect-to=%2Fdashboard#login"
 		},
 	}),
+	userContext: createResource({
+		url: "iswitch.session_api.get_user_context",
+		auto: false,
+		cache: "UserContext",
+	}),
 	user: sessionUser(),
 	isLoggedIn: computed(() => !!session.user),
+	roles: computed(() => session.userContext.data?.roles || []),
+	isAdmin: computed(() => session.userContext.data?.is_admin || false),
+	isMerchant: computed(() => session.userContext.data?.is_merchant || false),
 })
